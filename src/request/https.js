@@ -23,22 +23,13 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(res => {
   Loading.service().close()
   console.log(res.data)
-  if (res.data.code === 0) {
+  if (res.data.code === 200) {
     return res.data
-  } else if (res.data.code === 1000) {
+  } else if (res.data.code === -99) {
+    Message.error('无访问权限!')
+    return Promise.reject(res)
+  } else if (res.data.code === -1) {
     router.push('/login')
-    return Promise.reject(res)
-  } else if (res.data.code === 1002) {
-    Message.error('帐号或密码错误!')
-    return Promise.reject(res)
-  } else if (res.data.code === 3003) {
-    Message.warning('已在最前')
-    return res.data
-  } else if (res.data.code === 3004) {
-    Message.warning('已在最后')
-    return res.data
-  } else if (res.data.code === 5000) {
-    Message.warning('图片未上传或上传失败')
     return Promise.reject(res)
   }
   return Promise.reject(res)
