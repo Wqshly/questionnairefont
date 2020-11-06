@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+const respondents = () => Promise.resolve(require('@/view/respondents'))
 const login = () => Promise.resolve(require('@/view/login'))
 
 // 多次点击同一路由时，执行catch，避免报错。
@@ -16,6 +17,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'respondents',
+      component: respondents
+    },
+    {
+      path: '/login',
       name: 'login',
       component: login
     }
