@@ -6,11 +6,13 @@
     <section class="transform-global-centre form-container respondents-form-style">
       <template v-if="identify === 1">
         <h1>基 本 信 息 填 写</h1>
-        <el-form :model="studentsForm" label-width="100px">
-          <el-form-item v-model="studentsForm.name" label="姓名:">
+        <el-form :model="studentsForm" style="margin-top: 20px">
+          <el-form-item v-model="studentsForm.name">
             <el-input prop="name"  placeholder="请输入姓名"></el-input>
           </el-form-item>
-          <el-form-item></el-form-item>
+          <el-form-item v-model="studentsForm.name">
+            <el-input prop="name"  placeholder="输入姓名"></el-input>
+          </el-form-item>
           <el-form-item>
             <el-button style="float: left;width: 100px;" @click="login()">登录</el-button>
           </el-form-item>
@@ -93,15 +95,19 @@ export default {
 
   @media screen and (max-width: 600px) {
     .respondents-form-style {
-      width: 350px;
-      height: 200px;
+      width: 300px;
     }
   }
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 600px) and (max-width: 900px) {
     .respondents-form-style {
-      width: 25em;
-      height: 18em;
+      width: 500px;
+    }
+  }
+
+  @media screen and (min-width: 900px) {
+    .respondents-form-style {
+      width: 650px;
     }
   }
 
