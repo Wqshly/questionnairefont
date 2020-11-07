@@ -13,6 +13,16 @@
           <el-form-item v-model="studentsForm.name">
             <el-input prop="name"  placeholder="输入姓名"></el-input>
           </el-form-item>
+          <el-form-item v-model="studentsForm.name" label-width="90px" label="受教育阶段">
+            <el-select placeholder="请选择">
+              <el-option
+                v-for="item in education"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item>
             <el-button style="float: left;width: 100px;" @click="login()">登录</el-button>
           </el-form-item>
@@ -70,6 +80,22 @@ export default {
   data () {
     return {
       dialogVisible: true,
+      education: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
       studentsForm: {
         name: null
       },
