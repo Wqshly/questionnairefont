@@ -7,14 +7,20 @@
       <template v-if="identify === 1">
         <h1>基 本 信 息 填 写</h1>
         <el-form :model="studentsForm" style="margin-top: 20px">
-          <el-form-item v-model="studentsForm.name">
-            <el-input prop="name"  placeholder="请输入姓名"></el-input>
+          <el-form-item v-model="studentsForm.grade">
+            <el-input prop="name"  placeholder="请输入年级"></el-input>
           </el-form-item>
-          <el-form-item v-model="studentsForm.name">
-            <el-input prop="name"  placeholder="输入姓名"></el-input>
+          <el-form-item v-model="studentsForm.code">
+            <el-input prop="name"  placeholder="输入4位编码"></el-input>
           </el-form-item>
-          <el-form-item v-model="studentsForm.name" label-width="90px" label="受教育阶段">
-            <el-select placeholder="请选择">
+          <el-form-item label-width="45px" label="性别">
+            <el-radio-group v-model="studentsForm.sex">
+              <el-radio :label="0">男</el-radio>
+              <el-radio :label="1">女</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label-width="90px" label="受教育阶段">
+            <el-select v-model="studentsForm.education" placeholder="请选择">
               <el-option
                 v-for="item in education"
                 :key="item.value"
@@ -24,7 +30,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button style="float: left;width: 100px;" @click="login()">登录</el-button>
+            <el-button style="float: left;width: 100px;" @click="login('studentOption')">登录</el-button>
           </el-form-item>
         </el-form>
       </template>
@@ -44,7 +50,7 @@
           <el-form-item></el-form-item>
           <el-form-item></el-form-item>
           <el-form-item>
-            <el-button style="float: left;width: 100px;" @click="login()">登录</el-button>
+            <el-button style="float: left;width: 100px;" @click="login()">登入</el-button>
           </el-form-item>
         </el-form>
       </template>
@@ -59,17 +65,14 @@
         </el-form>
       </template>
     </section>
-    <el-dialog :visible.sync="dialogVisible" title="选择身份" class="dialog-style"
+    <el-dialog :visible.sync="dialogVisible" title="选择身份" custom-class="dialog-style"
                :close-on-click-modal="false" :show-close="false" ref="dialog">
-      <el-radio-group v-model="identify">
-        <el-radio :label="1">学生</el-radio>
-        <el-radio :label="2">家长</el-radio>
-        <el-radio :label="3">校方人员</el-radio>
-        <el-radio :label="0">后台管理员</el-radio>
+      <el-radio-group style="margin-bottom: 15px;" v-model="identify">
+        <el-radio :label="1" @click.native="dialogVisible = false">学生</el-radio>
+        <el-radio :label="2" @click.native="dialogVisible = false">家长</el-radio>
+        <el-radio :label="3" @click.native="dialogVisible = false">校方人员</el-radio>
+        <el-radio :label="0" @click.native="dialogVisible = false">后台管理员</el-radio>
       </el-radio-group>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible = false">下一步</el-button>
-      </span>
     </el-dialog>
   </div>
 </template>
@@ -81,23 +84,20 @@ export default {
     return {
       dialogVisible: true,
       education: [{
-        value: '选项1',
-        label: '黄金糕'
+        value: '小学',
+        label: '小学'
       }, {
-        value: '选项2',
-        label: '双皮奶'
+        value: '中学',
+        label: '中学'
       }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
+        value: '大学',
+        label: '大学'
       }],
       studentsForm: {
-        name: null
+        grade: null,
+        code: null,
+        sex: 0,
+        education: null
       },
       respondentsInfoForm: {
         name: null
@@ -106,8 +106,8 @@ export default {
     }
   },
   methods: {
-    login () {
-      this.$router.push('/login')
+    login (option) {
+      this.$router.push(option)
     },
     manageEnter () {
       this.$router.push('/login')
@@ -153,8 +153,11 @@ export default {
     cursor: pointer;
   }
 
-  .dialog-style {
-    position: fixed;
-  }
+</style>
 
+<style>
+
+  .dialog-style {
+    border-radius: 15px;
+  }
 </style>
